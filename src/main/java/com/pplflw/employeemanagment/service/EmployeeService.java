@@ -25,6 +25,7 @@ public class EmployeeService {
 
     @Transactional
     public Employee createEmployee(Employee employee) {
+        employee.setId(null);
         stateMachine.start();
         employee.setState(StateEnum.ADDED);
         employee = employeeRepository.save(employee);
