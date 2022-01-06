@@ -1,15 +1,27 @@
-version: '2'
+version: '3'
+
 services:
-  message-server:
-    container_name: employee-managment
-    build:
-      context: docker-employee-managment
-      dockerfile: Dockerfile
-    image: employee-managment:latest
+
+  myapp-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=employeemanagmentdb
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=Root1234*
     ports:
-      - 18888:8888
-    networks:
-      - spring-cloud-network
-networks:
-  spring-cloud-network:
-    driver: bridge
+      - 3306:3306
+
+  employee-managment:
+    build: .
+    restart: on-failure
+    depends_on:
+      - myapp-mysql
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=myapp-mysql
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=Root1234*
+      - DATABASE_NAME=employeemanagmentdb
+      - DATABASE_PORT=3306
