@@ -1,0 +1,15 @@
+version: '2'
+services:
+  message-server:
+    container_name: employee-managment
+    build:
+      context: docker-employee-managment
+      dockerfile: Dockerfile
+    image: employee-managment:latest
+    ports:
+      - 18888:8888
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge
