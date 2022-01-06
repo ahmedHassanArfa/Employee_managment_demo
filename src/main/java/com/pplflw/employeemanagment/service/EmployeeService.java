@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Transactional
     public Employee createEmployee(Employee employee) {
         stateMachine.start();
         employee.setState(StateEnum.ADDED);
@@ -37,7 +39,8 @@ public class EmployeeService {
         return employeeRepository.findById(id).get();
     }
 
-    public void changeState(Integer employeeId, StateEnum state) {
+    @Transactional
+    public Employee changeState(Integer employeeId, StateEnum state) {
         switch (state) {
             case IN_CHECK:
                 stateMachine.sendEvent(StateEventsEnum.IN_CHECK_EVENT);
@@ -53,6 +56,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.getById(employeeId);
         employee.setState(state);
         employeeRepository.save(employee);
+        return employee;
     }
 
 }
