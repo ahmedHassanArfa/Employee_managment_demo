@@ -3,7 +3,7 @@ package com.pplflw.employeemanagment.configuration;
 import com.pplflw.employeemanagment.constant.StateEnum;
 import com.pplflw.employeemanagment.constant.StateEventsEnum;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.statemachine.config.EnableStateMachine;
+import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
@@ -11,7 +11,7 @@ import org.springframework.statemachine.config.builders.StateMachineTransitionCo
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
 
 @Configuration
-@EnableStateMachine
+@EnableStateMachineFactory
 public class SimpleEnumStateMachineConfiguration extends StateMachineConfigurerAdapter<StateEnum, StateEventsEnum> {
 
     @Override
